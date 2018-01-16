@@ -255,7 +255,7 @@
 0 -1 -1 2 1 #"\0"
 0 -1 1 #"\0"
 1.0 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0.0 0.0 0.0 1.0 1.0 1.0 0 0 175 0 0
-0 -1 -1           0 62 0 4 3 85
+0 -1 -1           0 61 0 4 3 85
 (
  #";; The first three lines of this file were inserted by DrRacket. The"
  #"y record metadata"
@@ -330,5 +330,4 @@
 1 #"\0"
 8 #"decimal\0"
 2 #"1\0"
-0 0 24 29 1 #"\n"
 0           0
