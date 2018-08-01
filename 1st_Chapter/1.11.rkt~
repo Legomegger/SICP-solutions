@@ -8,10 +8,10 @@
       (+ (f(- n 1)) (f(- n 2)) (f(- n 3)))))
 
 ;; iterative
-(define (f n)
-  (define (fi a b c count)
-  (if (= count 0)
+(define (fi n)
+  (fit 2 1 0 n))
+(define (fit a b c counter)
+  (if (= counter 0)
       c
-      (fi (+ a b c) a b (- count 1))))
-  (fi 2 1 0 n))
-(f 5)
+      (fit (+ a b c) a b (- counter 1))))
+(fi 40)
