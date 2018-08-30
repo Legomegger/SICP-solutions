@@ -1,0 +1,10 @@
+#lang racket
+(define (fast-mul a b)
+  (define (russian-mul a b sum)
+    (cond ((= b 0) sum)
+          ((even? b) (russian-mul (double a) (halve b) sum))
+          (else (russian-mul a (- b 1) (+ sum a)))))
+  (define (double x) (* x 2))
+  (define (halve x) (/ x 2))
+  (russian-mul a b 0))
+(fast-mul 5 4)
