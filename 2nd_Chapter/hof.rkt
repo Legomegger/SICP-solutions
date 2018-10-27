@@ -1,0 +1,18 @@
+#lang racket
+(define (map proc list)
+  (if (null? list)
+      null
+      (cons (proc (car list))
+            (map proc (cdr list)))))
+
+(define (filter predicate list)
+  (cond ((null? list) null)
+        ((predicate (car list)) (cons (car list) (filter predicate (cdr list))))
+        (else (filter predicate (cdr list)))))
+
+(define (accumulate op init sequence)
+  (if (null? sequence)
+      init
+      (op (car sequence)
+          (accumulate op init (cdr sequence)))))
+(provide map filter accumulate)

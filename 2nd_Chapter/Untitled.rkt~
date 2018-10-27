@@ -18,14 +18,5 @@
   (car (cdr branch)))
 
 (define (total-weight mobile)
-  (cond ((null? mobile) 0)
-        ((not (pair? (branch-structure mobile))) (branch-structure mobile))
-        (else (+ (total-weight (left-branch mobile))
-                 (total-weight (right-branch mobile))))))
-(define a (make-branch 10 50))
-(define b (make-branch 4 110))
-(total-weight (make-mobile a b))
-
-
   
 
