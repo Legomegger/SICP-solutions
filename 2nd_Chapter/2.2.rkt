@@ -1,37 +1,27 @@
-#lang racket
-(define (make-segment start end)
-  (cons start end))
-
+#lang sicp
+(define (make-segment start-segment end-segment)
+  (cons start-segment end-segment))
 (define (start-segment segment)
   (car segment))
-
 (define (end-segment segment)
   (cdr segment))
-
-(define (make-point x y)
-  (cons x y))
-
+(define (make-point x-point y-point)
+  (cons x-point y-point))
 (define (x-point point)
   (car point))
-
 (define (y-point point)
   (cdr point))
-
 (define (midpoint-segment segment)
-  (make-point (/ (+ (x-point (start-segment segment))
-                 (x-point (end-segment segment))) 2)
-              (/ (+ (y-point (start-segment segment))
-                 (y-point (end-segment segment))) 2)))
-
-(define (print-point p)
-(newline)
-(display "(")
-(display (x-point p))
-(display ",")
-(display (y-point p))
-(display ")"))
-
-(define one (make-point 2 2))
-(define two (make-point 6 6))
-(define seg (make-segment one two))
-(midpoint-segment seg)
+  (let ((st-s (start-segment segment))
+        (en-s (end-segment segment)))
+    (let ((x-point-first-seg (x-point st-s))
+        (y-point-first-seg (y-point st-s))
+        (x-point-second-seg (x-point en-s))
+        (y-point-second-seg (y-point en-s)))
+    (make-point (/ ( + x-point-first-seg x-point-second-seg) 2)
+                (/ ( + y-point-first-seg y-point-second-seg) 2)))))
+;;test
+(define first-point (make-point 2 6))
+(define second-point (make-point 4 8))
+(define segment (make-segment first-point second-point))
+(midpoint-segment segment)

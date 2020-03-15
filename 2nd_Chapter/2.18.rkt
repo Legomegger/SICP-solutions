@@ -1,8 +1,11 @@
-#lang racket
-(define (reverse l)
-  (define (iter li acc)
-    (if (null? li)
-        acc
-        (iter (cdr li) (cons (car li) acc))))
-  (iter l null))
-(reverse (list 1 2 3 4))
+#lang sicp
+(define (reverse list)
+  (define (list-iter l result)
+    (if (null? l)
+        result
+        (list-iter (cdr l)
+                   (cons (car l) result))))
+  (list-iter list nil))
+
+(define a (list 1 2 3 4))
+(reverse a)

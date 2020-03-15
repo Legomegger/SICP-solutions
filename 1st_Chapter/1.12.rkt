@@ -1,10 +1,9 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-advanced-reader.ss" "lang")((modname |1.12|) (read-case-sensitive #t) (teachpacks ((lib "image.rkt" "teachpack" "2htdp"))) (htdp-settings #(#t constructor repeating-decimal #t #t none #f ((lib "image.rkt" "teachpack" "2htdp")) #f)))
-(define (pascal str el)
-  (cond ((or (= el 1) (= str el)) 1)
-        (else (+ (pascal (- str 1)
-                         el)
-                 (pascal (- str 1)
-                         (- el 1))))))
-(pascal 4 2)
+#lang sicp
+
+(define (pascal x y)
+  (cond ((or (= x y) (= y 1)) 1)
+        (else (+ (pascal (- x 1) (- y 1))
+                 (pascal (- x 1) y)))))
+
+(pascal 5 4)
+(pascal 5 2)

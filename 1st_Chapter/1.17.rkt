@@ -1,9 +1,9 @@
-#lang racket
+#lang sicp
 (define (fast-mul a b)
-  (cond ((= b 1) 0)
-        ((even? b) (+ (double a) (fast-mul a (halve b))))
-        (else (+ a (fast-mul a (- b 1))))))
-  (define (double x) (* 2 x))
+  (define (double x) (* x 2))
   (define (halve x) (/ x 2))
+  (cond ((= b 1) a)
+        ((even? b) (fast-mul (double a) (halve b)))
+        (else (+ a (fast-mul a (- b 1))))))
 
-(fast-mul 5 4)
+(fast-mul 3 5)

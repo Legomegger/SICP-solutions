@@ -1,74 +1,57 @@
-#lang racket
-(define (make-segment start end)
-  (cons start end))
-
+#lang sicp
+(define (make-segment start-segment end-segment)
+  (cons start-segment end-segment))
 (define (start-segment segment)
   (car segment))
-
 (define (end-segment segment)
   (cdr segment))
-
-(define (make-point x y)
-  (cons x y))
-
+(define (make-point x-point y-point)
+  (cons x-point y-point))
 (define (x-point point)
   (car point))
-
 (define (y-point point)
   (cdr point))
-
 (define (midpoint-segment segment)
-  (make-point (/ (+ (x-point (start-segment segment))
-                 (x-point (end-segment segment))) 2)
-              (/ (+ (y-point (start-segment segment))
-                 (y-point (end-segment segment))) 2)))
+  (let ((st-s (start-segment segment))
+        (en-s (end-segment segment)))
+    (let ((x-point-first-seg (x-point st-s))
+        (y-point-first-seg (y-point st-s))
+        (x-point-second-seg (x-point en-s))
+        (y-point-second-seg (y-point en-s)))
+    (make-point (/ ( + x-point-first-seg x-point-second-seg) 2)
+                (/ ( + y-point-first-seg y-point-second-seg) 2)))))
 
-(define (print-point p)
-(newline)
-(display "(")
-(display (x-point p))
-(display ",")
-(display (y-point p))
-(display ")"))
+(define (make-rect origin width height)
+  (cons origin (cons width height)))
+(define (origin rect)
+  (car rect))
+(define (width rect)
+  (car (cdr rect)))
+(define (height rect)
+  (cdr (cdr rect)))
+(define (area rect)
+  (let ((w (width rect))
+        (h (height rect))
+        (o (origin rect)))
+    (let ((w-len (abs (- (x-point o) (x-point (end-segment w)))))
+          (h-len (abs (- (y-point o) (y-point (end-segment h))))))
+      (* w-len h-len))))
+(define (perimeter rect)
+  (let ((w (width rect))
+        (h (height rect))
+        (o (origin rect)))
+    (let ((w-len (abs (- (x-point o) (x-point (end-segment w)))))
+          (h-len (abs (- (y-point o) (y-point (end-segment h))))))
+      (/ (+ w-len h-len) 2))))
 
-(define one (make-point 3 3))
-(define two (make-point 3 7))
-(define three (make-point 8 7))
-(define h (make-segment one two))
-(define w (make-segment two three))
+;;make-segment start-segment end-segment
+;;make-point x-point y-point
+;;make-rect origin width height
+;;test
 
-(define (make-rectangle width height)
-  (cons width height))
-
-(define (get-width rectangle)
-  (start-segment rectangle))
-
-(define (get-height rectangle)
-  (end-segment rectangle))
-
-(define (get-width-length rectangle)
-  (abs
-   (- (x-point (start-segment (get-width rectangle)))
-      (x-point (end-segment (get-width rectangle))))))
-
-(define (get-height-length rectangle)
-  (abs
-   (- (y-point (start-segment (get-height rectangle)))
-      (y-point (end-segment (get-height rectangle))))))
-
-(define (area rectangle)
-  (* (get-width-length rectangle)
-     (get-height-length rectangle)))
-
-(define (perimeter rectangle)
-  (* 2 (+ (get-width-length rectangle)
-          (get-height-length rectangle))))
-
-(define rectangle (make-rectangle w h))
-rectangle
-(get-width rectangle)
-(get-height rectangle)
-(get-width-length rectangle)
-(get-height-length rectangle)
-(area rectangle)
-(perimeter rectangle)
+(define or (make-point 1 1))
+(define dlina (make-segment or (make-point 3 1)))
+(define shirina (make-segment or (make-point 1 3)))
+(define rect (make-rect or dlina shirina))
+(area rect)
+(perimeter rect)

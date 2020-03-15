@@ -1,10 +1,9 @@
-#lang racket
-(define (make-interval lower-bound upper-bound) (cons lower-bound upper-bound))
-(define (lower-bound interval) (car interval))
-(define (upper-bound interval) (cdr interval))
+#lang sicp
+
 (define (add-interval x y)
   (make-interval (+ (lower-bound x) (lower-bound y))
                  (+ (upper-bound x) (upper-bound y))))
+
 (define (mul-interval x y)
   (let ((p1 (* (lower-bound x) (lower-bound y)))
         (p2 (* (lower-bound x) (upper-bound y)))
@@ -12,37 +11,54 @@
         (p4 (* (upper-bound x) (upper-bound y))))
     (make-interval (min p1 p2 p3 p4)
                    (max p1 p2 p3 p4))))
+
+
+
+
 (define (div-interval x y)
-  (mul-interval x
+  (if (or (<= (lower-bound x) 0)
+          (<= (lower-bound y) 0))
+      (error "Less than 0")
+      (mul-interval x
                 (make-interval (/ 1.0 (upper-bound y))
-                               (/ 1.0 (lower-bound y)))))
+                               (/ 1.0 (lower-bound y))))))
+
+(define (make-interval a b) (cons a b))
+
+(define (upper-bound interval) (cdr interval))
+(define (lower-bound interval) (car interval))
+
 (define (sub-interval x y)
-  (make-interval (- (lower-bound x) (upper-bound y))
-                 (- (upper-bound x) (lower-bound y))))
-(define (div-interval-improved x y)
-  (cond ((<= (* (lower-bound y) (upper-bound y)) 0)
-         (error "intersect 0" y))
-        (else (mul-interval x
-                       (make-interval (/ 1.0 (upper-bound y))
-                                      (/ 1.0 (lower-bound y)))))))
+  (make-interval (- (lower-bound x) (lower-bound y))
+                 (- (upper-bound x) (upper-bound y))))
 
-(define (make-center-width c w )
-  (make-interval (- c w) (+ c w)))
+(define (make-center-width c w) (make-interval (- c w) (+ c w)))
 (define (center i)
-  (/ (+ (upper-bound i) (lower-bound i)) 2))
+(/ (+ (lower-bound i) (upper-bound i)) 2))
 (define (width i)
-  (/ (- (upper-bound i) (lower-bound i)) 2))
-(make-center-width 3.5 0.15)
-(center (make-center-width 3.5 0.15))
-(width (make-center-width 3.5 0.15))
-
+(/ (- (upper-bound i) (lower-bound i)) 2))
 
 (define (make-center-percent c p)
-  (let ((err (* (/ c 100) p)))
-    (make-interval (- c err)
-                   (+ c err))))
-(define (percent i)
-  (/ (* (abs (- (upper-bound i) (center i))) 100)
-     (center i)))
+  (let ((low-bound (- c (* c (/ p 100))))
+        (up-bound (+ c (* c (/ p 100)))))
+    (make-interval low-bound up-bound)))
 
-(percent (make-center-percent 6.8 10))
+(define (center-p i)
+  (/ (+ (lower-bound i)
+        (upper-bound i))
+     2))
+
+(define (percent i)
+  (let ((center (center-p i))
+        (limit (lower-bound i)))
+    (let ((p (- center limit)))
+      (* (/ p center) 100))))
+
+(define (par1 r1 r2)
+(div-interval (mul-interval r1 r2)
+(add-interval r1 r2)))
+(define (par2 r1 r2)
+(let ((one (make-interval 1 1)))
+(div-interval one
+(add-interval (div-interval one r1)
+(div-interval one r2)))))

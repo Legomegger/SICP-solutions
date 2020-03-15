@@ -1,17 +1,20 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-advanced-reader.ss" "lang")((modname |1.11|) (read-case-sensitive #t) (teachpacks ((lib "image.rkt" "teachpack" "2htdp"))) (htdp-settings #(#t constructor repeating-decimal #t #t none #f ((lib "image.rkt" "teachpack" "2htdp")) #f)))
-;;recursive
+#lang sicp
 (define (f n)
   (if (< n 3)
       n
-      (+ (f(- n 1)) (f(- n 2)) (f(- n 3)))))
+      (+ (f (- n 1))
+         (f (- n 2))
+         (f (- n 3)))))
+;;(f 4)
+;; f5 11
 
-;; iterative
-(define (f n)
-  (define (fi a b c count)
-  (if (= count 0)
-      c
-      (fi (+ a b c) a b (- count 1))))
-  (fi 2 1 0 n))
-(f 5)
+(define (fn n)
+  (define (f-iter a b c counter)
+    (if (= counter 0)
+        a
+        (f-iter b c (+ a b c) (- counter 1))))
+  (f-iter 0 1 2 n))
+
+(fn 7)
+(f 7)
+

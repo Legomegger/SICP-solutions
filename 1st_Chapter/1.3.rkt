@@ -1,12 +1,15 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-reader.ss" "lang")((modname |1.3|) (read-case-sensitive #t) (teachpacks ((lib "image.rkt" "teachpack" "2htdp"))) (htdp-settings #(#t constructor repeating-decimal #f #t none #f ((lib "image.rkt" "teachpack" "2htdp")) #f)))
- (define (sum-of-biggest-squares a b c)
-   (cond ((and (>= a b)(>= b c)) (sum-of-squares a b))
-         ((and (>= a c)(>= c b)) (sum-of-squares a c))
-         (else (sum-of-squares b c))))
-(define (sum-of-squares x y)
-  (+ (square x)(square y)))
-(define (square x)
-  (* x x))
-(sum-of-biggest-squares 1 3 0)
+#lang racket
+(define (sum-of-squares-max a b c)
+  (define (square x)
+    (* x x))
+  (cond ((and (> a b)
+              (> a c)) (+ (square a)
+                          (square (max b c))))
+        ((and (> b a)
+              (> b c)) (+ (square b)
+                          (square (max a c))))
+        (else (+ (square c)
+                 (square (max a b))))))
+
+(sum-of-squares-max 1 2 3)
+(sum-of-squares-max 2 3 1)
