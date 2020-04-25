@@ -1,8 +1,7 @@
-#lang racket
-(define (for-each proc list)
+#lang sicp
+(define (for-each p list)
   (if (null? list)
-      null
-      (cons (proc (car list))
-            (for-each proc (cdr list)))))
-(for-each (lambda (x) (newline) (display x))
-          (list 57 321 88))
+      nil
+      (cons (p (car list))
+            (for-each p (cdr list)))))
+(for-each display (list 1 2 3 4))
